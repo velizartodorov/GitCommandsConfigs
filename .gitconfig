@@ -4,14 +4,11 @@
 [core]
 	excludesFile = %USERNAME%\\.gitignore
 [alias]
+    current-branch = !git rev-parse --abbrev-ref HEAD
 	fpush = push --force origin
 	prune-tags = !git fetch --prune --prune-tags
-	delete-merged = !git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 -r git branch -d
-	cleanup-develop = !git checkout develop | git delete-merged | git remote prune origin | git prune | git prune-tags | git clean -df | git gc
-	cleanup-master = !git checkout master | git delete-merged | git remote prune origin | git prune | git prune-tags | git clean -df | git gc
-	current-branch = !git rev-parse --abbrev-ref HEAD
-	rebase-on-develop = !git pull --rebase origin develop
-	rebase-on-master = !git pull --rebase origin master
+	delete-merged = "!git branch -r | grep 'origin' | grep -v 'master$' | grep -v 'develop$' | grep -v 'main$' | grep -v HEAD | cut -d/ -f2- | while read line; do git push origin :heads/$line; git branch -d ${line}; done;"
+	cleanup = "!f() { branch=$(git symbolic-ref --short HEAD 2> /dev/null || git describe --tags --exact-match); if [ \"$branch\" == \"master\" ] || [ \"$branch\" == \"develop\" ] || [ \"$branch\" == \"main\" ]; then git checkout $branch && git pull --rebase origin $branch && git delete-merged && git remote prune origin && git prune && git prune-tags && git clean -df && git gc; else echo \"Switch to master, develop or main branch first.\"; fi }; f"
 	graph = !git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(green)%C(bold)%ad%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --date=short
 	rebase = true
 [fetch]
