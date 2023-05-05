@@ -23,7 +23,7 @@ If you use Windows, make sure you setup the following section to the correspondi
 ### Force push
 
 ```bash
-push --force origin
+git push --force origin
 ```
 
 ### Restore deleted branch
