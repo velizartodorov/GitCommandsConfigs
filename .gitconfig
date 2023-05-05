@@ -16,6 +16,6 @@
 [rebase]
 	autoStash = true
 [credential]
-	helper = manager-core
+	helper = manager
 [pull]
 	rebase = true
