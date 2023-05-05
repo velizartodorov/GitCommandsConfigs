@@ -1,21 +1,21 @@
 [user]
-	name = %USERNAME%
-	email = %EMAIL%
+    name = %USERNAME%
+    email = %EMAIL%
 [core]
-	excludesFile = %USERNAME%\\.gitignore
+    excludesFile = %USERNAME%\\.gitignore
 [alias]
     current-branch = !git rev-parse --abbrev-ref HEAD
-	fpush = push --force origin
-	prune-tags = !git fetch --prune --prune-tags
-	delete-merged = "!git branch -r | grep 'origin' | grep -v 'master$' | grep -v 'develop$' | grep -v 'main$' | grep -v HEAD | cut -d/ -f2- | while read line; do git push origin :heads/$line; git branch -d ${line}; done;"
-	cleanup = "!f() { branch=$(git symbolic-ref --short HEAD 2> /dev/null || git describe --tags --exact-match); if [ \"$branch\" == \"master\" ] || [ \"$branch\" == \"develop\" ] || [ \"$branch\" == \"main\" ]; then git checkout $branch && git pull --rebase origin $branch && git delete-merged && git remote prune origin && git prune && git prune-tags && git clean -df && git gc; else echo \"Switch to master, develop or main branch first.\"; fi }; f"
-	graph = !git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(green)%C(bold)%ad%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --date=short
-	rebase = true
+    fpush = push --force origin
+    prune-tags = !git fetch --prune --prune-tags
+    delete-merged = "!git branch -r | grep 'origin' | grep -v 'master$' | grep -v 'develop$' | grep -v 'main$' | grep -v HEAD | cut -d/ -f2- | while read line; do git push origin :heads/$line; git branch -d ${line}; done;"
+    cleanup = "!f() { branch=$(git symbolic-ref --short HEAD 2> /dev/null || git describe --tags --exact-match); if [ \"$branch\" != \"master\" ] && [ \"$branch\" != \"develop\" ] && [ \"$branch\" != \"main\" ]; then echo \"Switch to master, develop, or main branch first.\" && return 1; fi; git checkout $branch && git pull --rebase origin $branch && git delete-merged && git remote prune origin && git prune && git prune-tags && git clean -df && git gc; }; f"
+    graph = !git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(green)%C(bold)%ad%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --date=short
+    rebase = true
 [fetch]
-	prune = true
+    prune = true
 [rebase]
-	autoStash = true
+    autoStash = true
 [credential]
-	helper = manager
+    helper = manager
 [pull]
-	rebase = true
+    rebase = true
