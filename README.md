@@ -1,6 +1,8 @@
 # GitCommandsConfigs
 
-`.gitconfig` and git commands I use. 👉
+<img src="assets/git.png"  width="250" alt="">
+
+`.gitconfig` and git commands I use. 😉
 
 ## `.gitconfig` 🔧
 
