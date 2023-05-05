@@ -1,0 +1,24 @@
+[user]
+	name = %USERNAME%
+	email = %EMAIL%
+[core]
+	excludesFile = %USERNAME%\\.gitignore
+[alias]
+	fpush = push --force origin
+	prune-tags = !git fetch --prune --prune-tags
+	delete-merged = !git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 -r git branch -d
+	cleanup-develop = !git checkout develop | git delete-merged | git remote prune origin | git prune | git prune-tags | git clean -df | git gc
+	cleanup-master = !git checkout master | git delete-merged | git remote prune origin | git prune | git prune-tags | git clean -df | git gc
+	current-branch = !git rev-parse --abbrev-ref HEAD
+	rebase-on-develop = !git pull --rebase origin develop
+	rebase-on-master = !git pull --rebase origin master
+	graph = !git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(green)%C(bold)%ad%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --date=short
+	rebase = true
+[fetch]
+	prune = true
+[rebase]
+	autoStash = true
+[credential]
+	helper = manager-core
+[pull]
+	rebase = true
